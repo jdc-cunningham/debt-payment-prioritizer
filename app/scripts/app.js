@@ -109,8 +109,7 @@ const createCard = ({
   youPay,
   yearlyDebtGrowth,
   monthlyDebtGrowth,
-  dailyDebtGrowth,
-  realTimeGrowth
+  dailyDebtGrowth
 }) => (
   `<div class="debt-card" id="${id}">
     <h2>Name: ${name}</h2>
@@ -122,7 +121,6 @@ const createCard = ({
     <h3>Yearly debt growth: $${yearlyDebtGrowth}</h3>
     <h3>Monthly debt growth: $${monthlyDebtGrowth}</h3>
     <h3>Daily debt growth: $${dailyDebtGrowth}</h3>
-    <h3>Real time growth: $${realTimeGrowth}</h3>
     <button type="button" id="${id}" class="debt-card-del-btn">x</button>
   </div>`
 );
