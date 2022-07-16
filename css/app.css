@@ -78,6 +78,7 @@ body * {
   justify-content: flex-start;
   flex-wrap: wrap;
   padding: 4px;
+  width: 100%;
 }
 
 .app__body .loading {
