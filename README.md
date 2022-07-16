@@ -12,4 +12,7 @@ This is a basic debt payoff prioritizer app which is based on the APR/balance.
 ### Disclaimer
 This app has no authentication and stores your data in plaintext on your computer (`localStorage`).
 
+### Features
+- [ ] add ability to mark as paid (all local state so just add prop to obj)
+
 ### Icons from UXWing
