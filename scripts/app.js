@@ -7,6 +7,7 @@ const modalForm = document.getElementById('add-debt-modal');
 const modalFormAddBtn = document.getElementById('form-debt-save-btn');
 const dataStore = localStorage; // heh
 const appBody = document.getElementById('app-body');
+const totalPayDisp = document.getElementById('total-pay');
 const monthlyDebtGrowthGlobal = [];
 
 // basic modal logic
@@ -290,9 +291,14 @@ calculateBtn.addEventListener('click', () => {
   });
 
   // update cards
+  let totalPay = 0;
+
   monthlyDebtGrowthGlobal.forEach((debt, index) => {
     const debtCard = document.getElementById(debt.id);
 
     debtCard.querySelector('.you-pay').innerText = `$${payments[index]}.00`;
+    totalPay += payments[index];
   });
+
+  totalPayDisp.innerText = `$${truncateFormatCurrency(totalPay)}.00`;
 });
