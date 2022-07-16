@@ -127,15 +127,20 @@ const createCard = ({
   </div>`
 );
 
-// https://stackoverflow.com/a/1129270/2710227
-const compare = (a, b) => {
-  if ( a.last_nom < b.last_nom ){
-    return -1;
+// https://stackoverflow.com/a/4760279/2710227
+const dynamicSort = (property) => {
+  var sortOrder = 1;
+  if(property[0] === "-") {
+      sortOrder = -1;
+      property = property.substr(1);
   }
-  if ( a.last_nom > b.last_nom ){
-    return 1;
+  return function (a,b) {
+      /* next line works with strings and numbers, 
+       * and you may want to customize it to your needs
+       */
+      var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+      return result * sortOrder;
   }
-  return 0;
 }
 
 const getDebtInfoById = (curData, id) => {
@@ -156,6 +161,10 @@ const getDebtInfoById = (curData, id) => {
 
   return debtInfo;
 }
+
+// https://stackoverflow.com/a/31581206/2710227
+// string to float to string lol
+const truncateFormatCurrency = (currencyStr) => currencyStr.toLocaleString(undefined, {maximumFractionDigits: 2});
 
 const renderCards = () => {
   // check for and render existing entries
@@ -199,13 +208,12 @@ const renderCards = () => {
     debtGrowthByYearTmp.forEach(debt => {
       debtGrowthByYear.push({
         ...debt,
-        // https://stackoverflow.com/a/31581206/2710227
-        yearlyDebtGrowth: (parseFloat(debt.bal) * parseFloat(debt.apr * (1/100))).toLocaleString(undefined, {maximumFractionDigits: 2}) // string to float to string lol
+        yearlyDebtGrowth: parseFloat(debt.bal) * parseFloat(debt.apr * (1/100))
       })
     });
 
     // do the sorting
-    debtGrowthByYear.sort(compare).reverse();
+    debtGrowthByYear.sort(dynamicSort('yearlyDebtGrowth')).reverse();
 
     // now (lol) use this to sort curData by this order AND import the growth data oof
     // OMG I don't even want to think what N^5 or something this is, how many nested forEach loops dang
@@ -218,7 +226,9 @@ const renderCards = () => {
 
       const card = createCard({
         ...obj,
-        yearlyDebtGrowth: debt.yearlyDebtGrowth
+        yearlyDebtGrowth: truncateFormatCurrency(debt.yearlyDebtGrowth),
+        monthlyDebtGrowth: truncateFormatCurrency(debt.yearlyDebtGrowth / 12),
+        dailyDebtGrowth: truncateFormatCurrency((debt.yearlyDebtGrowth / 12) / 30.44) // looked this 30.4 number up on Google
       });
 
       appBody.innerHTML += card;
