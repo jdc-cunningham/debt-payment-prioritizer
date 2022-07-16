@@ -1,0 +1,118 @@
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+body * {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  color: #282828;
+}
+
+.app {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid #282828;
+  padding: 0 4px;
+}
+
+.app__header button#add-debt__header-btn {
+  background-image: url('../icons//plus-line.svg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  border-color: #282828;
+  cursor: pointer;
+}
+
+.cash-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.cash-input * {
+  font-size: 1.125rem;
+}
+
+.cash-input p {
+  font-weight: bold;
+}
+
+.cash-input input {
+  margin: 0 8px;
+  max-width: 100px;
+  padding: 0.25rem;
+}
+
+.app__body {
+  padding: 4px;
+}
+
+.app__body .loading {
+  font-size: 1.5rem;
+}
+
+#add-debt-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+#add-debt-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: white;
+  min-width: 400px;
+  padding: 1rem;
+}
+
+#add-debt-modal * {
+  font-size: 1.25rem;
+}
+
+#add-debt-modal span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#add-debt-modal span:not(:first-of-type) {
+  margin-top: 0.5rem;
+}
+
+#add-debt-modal span input {
+  margin-left: 1rem;
+}
+
+#add-debt-modal button {
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
