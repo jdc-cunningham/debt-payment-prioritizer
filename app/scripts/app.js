@@ -87,7 +87,6 @@ const bindDebtCardRemoveBtn = () => {
 
       curData.forEach(debtCard => {
         debtCard.forEach(field => {
-          console.log(field, debtCardId);
           if (field.name === 'id' && field.val !== debtCardId) {
             newArr.push(debtCard);
           }
