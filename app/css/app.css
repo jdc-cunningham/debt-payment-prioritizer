@@ -9,6 +9,10 @@ body * {
   color: #282828;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .app {
   display: flex;
   align-items: flex-start;
@@ -59,7 +63,16 @@ body * {
   padding: 0.25rem;
 }
 
+.app__header h1 {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
 .app__body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   padding: 4px;
 }
 
@@ -80,6 +93,7 @@ body * {
 }
 
 #add-debt-modal {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,6 +114,10 @@ body * {
   width: 100%;
 }
 
+#add-debt-modal span span { /* dumb */
+  color: red;
+}
+
 #add-debt-modal span:not(:first-of-type) {
   margin-top: 0.5rem;
 }
@@ -113,6 +131,31 @@ body * {
   cursor: pointer;
 }
 
-.hidden {
-  display: none;
+#add-debt-modal button#form-debt-cancel {
+  position: absolute;
+  top: -30px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background-color: firebrick;
+  border: 0;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.debt-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 2px 2px 2px 2px #505050;
+  border-radius: 4px;
+  margin: 0.5rem;
 }
