@@ -149,6 +149,7 @@ body * {
 }
 
 .debt-card {
+  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
@@ -158,4 +159,22 @@ body * {
   box-shadow: 2px 2px 2px 2px #505050;
   border-radius: 4px;
   margin: 0.5rem;
+}
+
+.debt-card .debt-card-del-btn {
+  position: absolute;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background-color: firebrick;
+  border: 0;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
 }

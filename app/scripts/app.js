@@ -25,6 +25,10 @@ modalContainerCloseBtn.addEventListener('click', toggleModal);
 
 // adding debts
 
+const clearFields = () => {
+  modalForm.querySelectorAll('input').forEach(input => input.value = '');
+}
+
 const getFormFields = () =>
   Array.from(modalForm.querySelectorAll('input')).map(input =>
     ({
@@ -47,14 +51,22 @@ const processForm = () => {
 
   const curData = JSON.parse(dataStore.getItem('finfinite')) || [];
 
+  // add id
+  formValues.push({
+    name: 'id',
+    val: Date.now()
+  });
+
   if (curData.length) {
-    curData.push([formValues]);
-    dataStore.setItem('finfinite', JSON.stringify(formValues));
+    curData.push(formValues);
+    dataStore.setItem('finfinite', JSON.stringify(curData));
   } else { // first save
-    dataStore.setItem('finfinite', JSON.stringify(formValues));
+    dataStore.setItem('finfinite', JSON.stringify([formValues]));
   }
 
   renderCards(); // re-render
+  clearFields();
+  toggleModal();
 }
 
 modalFormAddBtn.addEventListener('click', () => {
@@ -63,7 +75,32 @@ modalFormAddBtn.addEventListener('click', () => {
 
 // rendering debts
 
+const bindDebtCardRemoveBtn = () => {
+  document.querySelectorAll('.debt-card-del-btn').forEach(delBtn => { // checked does not build evt listeners per add
+    delBtn.addEventListener('click', (e) => {
+      const debtCardId = parseInt(e.target.getAttribute('id'));
+      const curData = JSON.parse(dataStore.getItem('finfinite'));
+      const newArr = [];
+
+      // should just use a filter here but the nested arrays makes it more difficult
+
+      curData.forEach(debtCard => {
+        debtCard.forEach(field => {
+          console.log(field, debtCardId);
+          if (field.name === 'id' && field.val !== debtCardId) {
+            newArr.push(debtCard);
+          }
+        })
+      });
+
+      localStorage.setItem('finfinite', JSON.stringify(newArr));
+      renderCards();
+    });
+  });
+}
+
 const createCard = ({
+  id,
   name,
   bal,
   apr,
@@ -75,7 +112,7 @@ const createCard = ({
   dailyDebtGrowth,
   realTimeGrowth
 }) => (
-  `<div class="debt-card">
+  `<div class="debt-card" id="${id}">
     <h2>Name: ${name}</h2>
     <h3>Balance: ${bal}</h3>
     <h3>APR: ${apr}</h3>
@@ -86,6 +123,7 @@ const createCard = ({
     <h3>Monthly debt growth: ${monthlyDebtGrowth}</h3>
     <h3>Daily debt growth: ${dailyDebtGrowth}</h3>
     <h3>Real time growth: ${realTimeGrowth}</h3>
+    <button type="button" id="${id}" class="debt-card-del-btn">x</button>
   </div>`
 );
 
@@ -93,22 +131,23 @@ const renderCards = () => {
   // check for and render existing entries
   const curData = JSON.parse(dataStore.getItem('finfinite')) || [];
 
-  console.log(curData);
-
   if (curData.length) {
-    appBody.innerHtml = '';
+    appBody.innerHTML = '';
 
     curData.forEach(debt => {
-      const card = createCard(
-        debt.name,
-        debt.bal,
-        debt.apr,
-        debt.dueDay,
-        debt.minPay
-      );
+      const obj = {};
+
+      // bad design array of objects, should be just one object
+      debt.forEach(debtField => obj[debtField.name] = debtField.val);
+
+      const card = createCard(obj);
 
       appBody.innerHTML += card;
     });
+
+    bindDebtCardRemoveBtn();
+  } else {
+    appBody.innerHTML = '<p class="loading">No local data, add debt to start using the app</p>';
   }
 }
 
