@@ -7,6 +7,7 @@ const modalForm = document.getElementById('add-debt-modal');
 const modalFormAddBtn = document.getElementById('form-debt-save-btn');
 const dataStore = localStorage; // heh
 const appBody = document.getElementById('app-body');
+const monthlyDebtGrowthGlobal = [];
 
 // basic modal logic
 
@@ -113,11 +114,11 @@ const createCard = ({
 }) => (
   `<div class="debt-card" id="${id}">
     <h2>Name: ${name}</h2>
-    <h3>Balance: ${bal}</h3>
+    <h3>Balance: <span class="red">$${bal}</span></h3>
     <h3>APR: ${apr}</h3>
     <h3>Due day: ${dueDay}</h3>
     <h3>Min pay: ${minPay}</h3>
-    <h3>You pay: ${youPay}</h3>
+    <h3>You pay: <span class="green you-pay">$0.00</span></h3>
     <h3>Yearly debt growth: $${yearlyDebtGrowth}</h3>
     <h3>Monthly debt growth: $${monthlyDebtGrowth}</h3>
     <h3>Daily debt growth: $${dailyDebtGrowth}</h3>
@@ -222,6 +223,11 @@ const renderCards = () => {
       // bad design array of objects, should be just one object
       debtInfo.forEach(debtField => obj[debtField.name] = debtField.val);
 
+      monthlyDebtGrowthGlobal.push({
+        id: debt.id,
+        monthlyDebtGrowth: truncateFormatCurrency(debt.yearlyDebtGrowth / 12)
+      });
+
       const card = createCard({
         ...obj,
         yearlyDebtGrowth: truncateFormatCurrency(debt.yearlyDebtGrowth),
@@ -239,3 +245,54 @@ const renderCards = () => {
 }
 
 renderCards();
+
+// apply payment
+const calculateBtn = document.getElementById('calculate-btn');
+
+calculateBtn.addEventListener('click', () => {
+  const amountVal = document.getElementById('pay-amount').value;
+
+  if (!amountVal || amountVal < 0) {
+    alert('Need a pay amount');
+    return;
+  }
+
+  const debtCount = monthlyDebtGrowthGlobal.length;
+
+  if (amountVal < (50 * debtCount)) {
+    alert(`Not enough, based on $50 min pay per debt. Needs to be at least $${50 * debtCount}.00`);
+    return;
+  }
+
+  const dividers = [];
+  
+  let sum = 0;
+
+  for (let i = 1; i <= debtCount; i++) {
+    if (i === 1) {
+      dividers.push(0); // placeholder
+    } else {
+      const val = 1 / (i * i);
+
+      dividers.push(val);
+      sum += val;
+    }
+  }
+
+  dividers[0] = 1 - sum;
+
+  const payments = [];
+
+  dividers.forEach(divider => {
+    const payVal = Math.floor(divider * amountVal); // means remainder
+
+    payments.push(payVal >= 50 ? payVal : 50); 
+  });
+
+  // update cards
+  monthlyDebtGrowthGlobal.forEach((debt, index) => {
+    const debtCard = document.getElementById(debt.id);
+
+    debtCard.querySelector('.you-pay').innerText = `$${payments[index]}.00`;
+  });
+});

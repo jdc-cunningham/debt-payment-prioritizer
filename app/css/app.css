@@ -42,6 +42,10 @@ body * {
   cursor: pointer;
 }
 
+.app__header button#calculate-btn {
+  cursor: pointer;
+}
+
 .cash-input {
   display: flex;
   align-items: center;
@@ -178,4 +182,14 @@ body * {
   border-radius: 15px;
   color: white;
   cursor: pointer;
+}
+
+.green {
+  color: green;
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
 }
