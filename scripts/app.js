@@ -99,6 +99,7 @@ const bindDebtCardRemoveBtn = () => {
   });
 }
 
+// some hoisting in here
 const createCard = ({
   id,
   name,
@@ -113,7 +114,7 @@ const createCard = ({
 }) => (
   `<div class="debt-card" id="${id}">
     <h2>Name: ${name}</h2>
-    <h3>Balance: <span class="red">$${bal}</span></h3>
+    <h3>Balance: <span class="red">$${truncateFormatCurrency(parseFloat(bal))}</span></h3>
     <h3>APR: ${apr}</h3>
     <h3>Due day: ${dueDay}</h3>
     <h3>Min pay: ${minPay}</h3>
