@@ -98,6 +98,15 @@ const bindDebtCardRemoveBtn = () => {
       renderCards();
     });
   });
+
+  // edit mode
+  document.querySelectorAll('.debt-card-edit-btn').forEach(editBtn => {
+    editBtn.addEventListener('click', (e) => {
+      // do the edit
+      // need to re-render
+      // save data
+    });
+  });
 }
 
 // some hoisting in here
@@ -124,6 +133,7 @@ const createCard = ({
     <h3>Monthly debt growth: $${monthlyDebtGrowth}</h3>
     <h3>Daily debt growth: $${dailyDebtGrowth}</h3>
     <button type="button" id="${id}" class="debt-card-del-btn">x</button>
+    <button type="button" id="${id}" class="debt-card-edit-btn"></button>
   </div>`
 );
 

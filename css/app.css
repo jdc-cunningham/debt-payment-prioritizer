@@ -169,7 +169,6 @@ body * {
 
 .debt-card .debt-card-del-btn {
   position: absolute;
-  position: absolute;
   top: -12px;
   right: -12px;
   width: 24px;
@@ -183,6 +182,26 @@ body * {
   border-radius: 15px;
   color: white;
   cursor: pointer;
+}
+
+.debt-card .debt-card-edit-btn {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background-image: url('../icons//pencil.svg');
+  background-size: 12px auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 0;
+  border-radius: 15px;
+  cursor: pointer;
+  /* transform: scaleX(-1); flips it horizontally */
 }
 
 .green {

@@ -14,5 +14,6 @@ This app has no authentication and stores your data in plaintext on your compute
 
 ### Features
 - [ ] add ability to mark as paid (all local state so just add prop to obj)
+- [ ] edit entries
 
 ### Icons from UXWing
