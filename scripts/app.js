@@ -132,8 +132,8 @@ const createCard = ({
     <h3>Yearly debt growth: $${yearlyDebtGrowth}</h3>
     <h3>Monthly debt growth: $${monthlyDebtGrowth}</h3>
     <h3>Daily debt growth: $${dailyDebtGrowth}</h3>
-    <button type="button" id="${id}" class="debt-card-del-btn">x</button>
-    <button type="button" id="${id}" class="debt-card-edit-btn"></button>
+    <button type="button" id="${id}" class="debt-card-del-btn" title="delete">x</button>
+    <button type="button" id="${id}" class="debt-card-edit-btn" title="edit"></button>
   </div>`
 );
 
