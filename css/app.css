@@ -67,9 +67,13 @@ body * {
   padding: 0.25rem;
 }
 
-.app__header h1 {
+.app__header h2 {
   font-size: 1.125rem;
   font-weight: bold;
+}
+
+.app__header h2 span#total-debt {
+  color: red;
 }
 
 .app__body {

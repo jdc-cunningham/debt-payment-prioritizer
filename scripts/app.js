@@ -9,6 +9,7 @@ const dataStore = localStorage; // heh
 const appBody = document.getElementById('app-body');
 const totalPayDisp = document.getElementById('total-pay');
 const monthlyDebtGrowthGlobal = [];
+const totalDebtDisp = document.getElementById('total-debt');
 
 let editCardId = '';
 
@@ -225,6 +226,7 @@ const renderCards = () => {
 
     // curData ex schema
     const debtGrowthByYearTmp = [];  // {id, growth}
+    let totalDebt = 0;
 
     // oof this sucks, example of bad decision propagating downards into future work
     // the reason this all started is I wanted to lazily check the field by name for the required field
@@ -239,6 +241,7 @@ const renderCards = () => {
 
         if (debtField.name === 'bal') {
           debtInfo.bal = debtField.val;
+          totalDebt += parseFloat(debtField.val);
         }
 
         if (debtField.name === 'apr') {
@@ -248,6 +251,8 @@ const renderCards = () => {
 
       debtGrowthByYearTmp.push(debtInfo);
     });
+
+    totalDebtDisp.innerText = `$${truncateFormatCurrency(totalDebt)}`;
 
     const debtGrowthByYear = [];
 
