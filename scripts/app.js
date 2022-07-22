@@ -156,10 +156,10 @@ const createCard = ({
 }) => (
   `<div class="debt-card" id="${id}">
     <h2>Name: ${name}</h2>
-    <h3>Balance: $${
+    <h3>Balance: ${
       editMode
-        ? `<input type="input" value="${truncateFormatCurrency(parseFloat(bal))}" onchange="updateBalance(this)"/>`
-        : `<span class="red">${truncateFormatCurrency(parseFloat(bal))}</span></h3>`
+        ? `$<input type="input" value="${truncateFormatCurrency(parseFloat(bal))}" onchange="updateBalance(this)"/>`
+        : `<span class="red">$${truncateFormatCurrency(parseFloat(bal))}</span></h3>`
     }</h3>
     <h3>APR: ${apr}</h3>
     <h3>Due day: ${dueDay}</h3>
