@@ -10,6 +10,8 @@ const appBody = document.getElementById('app-body');
 const totalPayDisp = document.getElementById('total-pay');
 const monthlyDebtGrowthGlobal = [];
 
+let editCardId = '';
+
 // basic modal logic
 
 const toggleModal = () => {
@@ -102,11 +104,40 @@ const bindDebtCardRemoveBtn = () => {
   // edit mode
   document.querySelectorAll('.debt-card-edit-btn').forEach(editBtn => {
     editBtn.addEventListener('click', (e) => {
-      // do the edit
-      // need to re-render
-      // save data
+      editCardId = e.target.getAttribute('id');
+      renderCards();
     });
   });
+}
+
+const updateBalance = (balInput) => {
+  const newBalance = balInput.value;
+  const curData = JSON.parse(dataStore.getItem('finfinite'));
+  const newData = [];
+
+  curData.forEach((debtCard, cardIndex) => {
+    let balId = 0;
+
+    // yuck internal loops
+    debtCard.forEach((debtInfo, index) => {
+      if (debtInfo.name === 'bal') {
+        balId = index;
+      }
+
+      if (debtInfo.name === 'id' && debtInfo.val === parseInt(editCardId)) {
+        curData[cardIndex][balId] = {
+          name: 'bal',
+          val: newBalance.replace(/,/g, '') // lol more than 1?
+        };
+      }
+    });
+
+    newData.push(debtCard);
+  });
+
+  localStorage.setItem('finfinite', JSON.stringify(newData));
+  editCardId = '';
+  renderCards();
 }
 
 // some hoisting in here
@@ -120,11 +151,16 @@ const createCard = ({
   youPay,
   yearlyDebtGrowth,
   monthlyDebtGrowth,
-  dailyDebtGrowth
+  dailyDebtGrowth,
+  editMode
 }) => (
   `<div class="debt-card" id="${id}">
     <h2>Name: ${name}</h2>
-    <h3>Balance: <span class="red">$${truncateFormatCurrency(parseFloat(bal))}</span></h3>
+    <h3>Balance: ${
+      editMode
+        ? `<input type="input" value="${truncateFormatCurrency(parseFloat(bal))}" onchange="updateBalance(this)"/>`
+        : `<span class="red">${truncateFormatCurrency(parseFloat(bal))}</span></h3>`
+    }</h3>
     <h3>APR: ${apr}</h3>
     <h3>Due day: ${dueDay}</h3>
     <h3>Min pay: ${minPay}</h3>
@@ -243,7 +279,8 @@ const renderCards = () => {
         ...obj,
         yearlyDebtGrowth: truncateFormatCurrency(debt.yearlyDebtGrowth),
         monthlyDebtGrowth: truncateFormatCurrency(debt.yearlyDebtGrowth / 12),
-        dailyDebtGrowth: truncateFormatCurrency((debt.yearlyDebtGrowth / 12) / 30.44) // looked this 30.4 number up on Google
+        dailyDebtGrowth: truncateFormatCurrency((debt.yearlyDebtGrowth / 12) / 30.44), // looked this 30.4 number up on Google
+        editMode: debt.id === parseInt(editCardId)
       });
 
       appBody.innerHTML += card;
