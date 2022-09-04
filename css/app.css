@@ -1,0 +1,253 @@
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+body * {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  color: #282828;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.app__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+}
+
+.app__sidebar, .app {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app__sidebar {
+  width: 15vw;
+  border-right: 1px solid #282828;
+  padding: 1rem;
+}
+
+.app__sidebar h2 {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.app__sidebar span.green {
+  color: green;
+}
+
+.app__sidebar .payment-date {
+  font-weight: bold;
+}
+
+.app {
+  width: 85vw;
+}
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid #282828;
+  padding: 0 4px;
+}
+
+.app__header button#add-debt__header-btn {
+  background-image: url('../icons//plus-line.svg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  border-color: #282828;
+  cursor: pointer;
+}
+
+.app__header button#calculate-btn {
+  cursor: pointer;
+}
+
+.cash-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.cash-input * {
+  font-size: 1.125rem;
+}
+
+.cash-input p {
+  font-weight: bold;
+}
+
+.cash-input input {
+  margin: 0 8px;
+  max-width: 100px;
+  padding: 0.25rem;
+}
+
+.app__header h2 {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.app__header h2 span#total-debt {
+  color: red;
+}
+
+.app__body {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 4px;
+  width: 100%;
+}
+
+.app__body .loading {
+  font-size: 1.5rem;
+}
+
+#add-debt-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+#add-debt-modal {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: white;
+  min-width: 400px;
+  padding: 1rem;
+}
+
+#add-debt-modal * {
+  font-size: 1.25rem;
+}
+
+#add-debt-modal span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+#add-debt-modal span span { /* dumb */
+  color: red;
+}
+
+#add-debt-modal span:not(:first-of-type) {
+  margin-top: 0.5rem;
+}
+
+#add-debt-modal span input {
+  margin-left: 1rem;
+}
+
+#add-debt-modal button {
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+#add-debt-modal button#form-debt-cancel {
+  position: absolute;
+  top: -30px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background-color: firebrick;
+  border: 0;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.debt-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 2px 2px 2px 2px #505050;
+  border-radius: 4px;
+  margin: 1rem;
+  width: calc(25% - 2rem);
+}
+
+.debt-card .debt-card-del-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background-color: firebrick;
+  border: 0;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.debt-card .debt-card-edit-btn {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  background-image: url('../icons//pencil.svg');
+  background-size: 12px auto;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border: 0;
+  border-radius: 15px;
+  cursor: pointer;
+  /* transform: scaleX(-1); flips it horizontally */
+}
+
+.green {
+  color: green;
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
+}

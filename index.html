@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debt Payoff Prioritizer</title>
+    <link rel="stylesheet" href="./css/css-reset.css">
+    <link rel="stylesheet" href="./css/app.css">
+  </head>
+  <body>
+    <div class="app__container">
+      <div class="app__sidebar" id="progress-output">
+        <h2>Progress</h2>
+      </div>
+      <div class="app">
+        <div class="app__header">
+          <button type="button" id="add-debt__header-btn" title="add debt"></button>
+          <h2>Total debt: <span id="total-debt"></span></h2>
+          <h2>Total pay: <span id="total-pay"></span></h2>
+          <span class="cash-input">
+            <p>Amount can pay $</p>
+            <input type="number" id="pay-amount">
+            <button type="button" id="calculate-btn">Apply</button>
+          </span>
+        </div>
+        <div class="app__body" id="app-body">
+          <p class="loading">Loading...</p>
+        </div>
+      </div>
+    </div>
+    <div id="add-debt-modal-container" class="hidden">
+      <div id="add-debt-modal">
+        <span>
+          Name <span>*</span>
+          <input name="name" type="text" id="form-debt-name">
+        </span>
+        <span>
+          Bal <span>*</span>
+          <input name="bal" type="number" id="form-debt-bal" placeholder="0.00">
+        </span>
+        <span>
+          APR <span>*</span>
+          <input name="apr" type="number" id="form-debt-bal" placeholder="29.99">
+        </span>
+        <span>
+          Due Day
+          <input name="dueDay" type="number" id="form-debt-due-date" placeholder="day of month">
+        </span>
+        <span>
+          Min pay (per month)
+          <input name="minPay" type="number" id="form-debt-min-pay">
+        </span>
+        <button type="button" id="form-debt-save-btn">Add</button>
+        <button type="button" id="form-debt-cancel">x</button>
+      </div>
+    </div>
+    <script src="./scripts/app.js"></script>
+  </body>
+</html>
