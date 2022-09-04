@@ -14,6 +14,10 @@ I'm really spent right now but I'll poke at this.
 
 Ate a lot of shit food, feel lethargic
 
+Well that's not good, any repo scrapers got the names of my debts! ha
+
+I'm already f'd anyway due to data breaches
+
 8:55 PM
 
 it's still wrong
