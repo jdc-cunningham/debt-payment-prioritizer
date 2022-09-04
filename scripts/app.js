@@ -413,9 +413,11 @@ const renderProgress = () => {
 
     Object.keys(payments).forEach(paymentDate => {
       // https://stackoverflow.com/a/16751601/2710227
-      document.getElementById('progress-output').innerHTML += `<p class="payment-date">${paymentDate}</p><p>Paid off <span class="green">$${truncateFormatCurrency(
+      const paidValue = truncateFormatCurrency(
         payments[paymentDate].reduce((partialSum, a) => partialSum + a, 0)
-      )}</span></p><br/>`;
+      );
+
+      document.getElementById('progress-output').innerHTML += `<p class="payment-date">${paymentDate}</p><p>Paid off <span class="${parseFloat(paidValue) >= 0 ? "green" : "red"}">$${paidValue}</span></p><br/>`;
     });
   }
 }
