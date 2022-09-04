@@ -417,7 +417,11 @@ const renderProgress = () => {
         payments[paymentDate].reduce((partialSum, a) => partialSum + a, 0)
       );
 
-      document.getElementById('progress-output').innerHTML += `<p class="payment-date">${paymentDate}</p><p>Paid off <span class="${parseFloat(paidValue) >= 0 ? "green" : "red"}">$${paidValue}</span></p><br/>`;
+      const balanceDecreased = parseFloat(paidValue) >= 0;
+      const progressText = balanceDecreased ? "Paid off" : "Increased";
+      const progressColor = balanceDecreased ? "green" : "red";
+
+      document.getElementById('progress-output').innerHTML += `<p class="payment-date">${paymentDate}</p><p>${progressText} <span class="${progressColor}">$${paidValue}</span></p><br/>`;
     });
   }
 }
