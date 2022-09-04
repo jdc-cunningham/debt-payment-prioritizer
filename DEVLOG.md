@@ -18,6 +18,10 @@ Well that's not good, any repo scrapers got the names of my debts! ha
 
 I'm already f'd anyway due to data breaches
 
+It is interesting though, I was supposed to put down $800 in this pay period but I actually subtracted from that by $400 or so dang...
+
+Slow escape
+
 8:55 PM
 
 it's still wrong
