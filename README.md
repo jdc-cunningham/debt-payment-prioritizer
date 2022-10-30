@@ -7,6 +7,10 @@ This is a basic debt payoff prioritizer app which is based on the APR/balance.
 ### Live app
 [View GitHub Pages app](https://jdc-cunningham.github.io/debt-payment-prioritizer/)
 
+### Where is the code?
+
+It's in the `docs` folder, otherwise have to use root and don't want to have API code readable, not a big deal but yeah.
+
 ### Bugs
 * one weird one, after you enter data, need to refresh for the amount to work, otherwise the min $50 per card multiplication doesn't work correctly.
 ### Disclaimer

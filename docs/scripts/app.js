@@ -513,5 +513,5 @@ const syncGoogleSpreadsheetRow = (rowDataStr) => {
 
 syncBtn.addEventListener('click', () => {
   syncBtn.classList = 'disabled';
-  getAjax('http://localhost:5043/get-latest-row', syncGoogleSpreadsheetRow);
+  getAjax('http://192.168.1.144:5043/get-latest-row', syncGoogleSpreadsheetRow);
 });
