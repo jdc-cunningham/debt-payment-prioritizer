@@ -12,3 +12,11 @@ More info from this [tutorial](https://isd-soft.com/tech_blog/accessing-google-a
 
 ### More on service accounts
 You'll have to [make one](https://console.cloud.google.com/iam-admin/serviceaccounts), set a key and also share the spreadsheet to this email.
+
+### Disclaimer
+
+Please note that the spreadsheet's column structure maps to the front-end cards (order of creation) so it will more than likely not work for you.
+
+This is due to avoiding disclosing my account names
+
+You could come up with some dynamic column mapping process but I'm not interested in that right now. This is a lazy app I sometimes work on.

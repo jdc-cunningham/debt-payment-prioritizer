@@ -427,3 +427,91 @@ const renderProgress = () => {
 }
 
 renderProgress();
+
+// from MDN
+const getAjax = (url, success) => {
+  var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  xhr.open('GET', url);
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState>3 && xhr.status==200) success(xhr.responseText);
+  };
+  xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  xhr.send();
+  return xhr;
+}
+
+// sync button
+const syncBtn = document.getElementById('sync');
+
+// nasty looping
+const getSetPrevBal = (prevAcctData, acctName, newBal) => {
+  const acctDataCopy = prevAcctData;
+
+  for (let i = 0; i < prevAcctData.length; i++) {
+    if (prevAcctData[i][0].val === acctName) {
+      // set new balance (nasty lol)
+      acctDataCopy[i][1].val = newBal;
+      dataStore.setItem('finfinite', JSON.stringify(acctDataCopy)); // so bad... like triple nested loops probably more, I'm just trying to get this done
+
+      return prevAcctData[i][1].val;
+    }    
+  }
+}
+
+const getBalChange = (prev, cur) => cur - prev;
+
+const syncGoogleSpreadsheetRow = (rowDataStr) => {
+  const rowData = JSON.parse(rowDataStr)?.data;
+
+  if (rowData?.err) {
+    alert('failed to get data from Google Spreadsheet');
+  }
+
+  const accountBalances = JSON.parse(dataStore.getItem('finfinite_balance_change'));
+  const updatedBalanceChanges = {};
+
+  // in order to line this up I'm looking at my spreadsheet columns/account names
+  const accountToSpreadsheetRowMap = [
+    rowData[20],
+    rowData[19],
+    rowData[12],
+    rowData[10],
+    rowData[17],
+    rowData[18],
+    rowData[14],
+    rowData[11],
+    rowData[13],
+    rowData[15],
+    rowData[16],
+    rowData[9],
+  ]; // the indexes of this array correspond to the accountBalance keys orders above
+
+  const now = Date.now();
+
+  // update balance diff for left sidebar
+  Object.keys(accountBalances).forEach((accountName, index) => {
+    const accountData = JSON.parse(dataStore.getItem('finfinite')); // hmm
+    const newBal = accountToSpreadsheetRowMap[index];
+
+    updatedBalanceChanges[accountName] = [
+      {
+        timestamp: now,
+        balance: getBalChange(getSetPrevBal(accountData, accountName, newBal), parseFloat(newBal)),
+      },
+      ...accountBalances[accountName]
+    ]
+  });
+
+  // update storage
+  dataStore.setItem('finfinite_balance_change', JSON.stringify(updatedBalanceChanges));
+
+  syncBtn.classList = '';
+
+  // reload page
+  location.reload(); // could just re-render left-side of page
+};
+
+syncBtn.addEventListener('click', () => {
+  syncBtn.classList = 'disabled';
+  getAjax('http://localhost:5043/get-latest-row', syncGoogleSpreadsheetRow);
+});

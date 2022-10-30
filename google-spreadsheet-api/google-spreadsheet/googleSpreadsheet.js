@@ -47,11 +47,6 @@ const getLastRow = async () => {
   });
 }
 
-/**
- * look at this, a docblock!
- * @param {array} payload the values to be entered matching spreadsheet column count
- * // reference: https://developers.google.com/sheets/api/guides/values
- */
 const _getLatestRow = async () => {
   const authenticated = await authenticate();
 
