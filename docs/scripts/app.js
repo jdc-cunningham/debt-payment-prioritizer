@@ -450,10 +450,11 @@ const getSetPrevBal = (prevAcctData, acctName, newBal) => {
   for (let i = 0; i < prevAcctData.length; i++) {
     if (prevAcctData[i][0].val === acctName) {
       // set new balance (nasty lol)
+      const oldBal = acctDataCopy[i][1].val;
       acctDataCopy[i][1].val = newBal;
       dataStore.setItem('finfinite', JSON.stringify(acctDataCopy)); // so bad... like triple nested loops probably more, I'm just trying to get this done
 
-      return prevAcctData[i][1].val;
+      return oldBal;
     }    
   }
 }
@@ -508,7 +509,7 @@ const syncGoogleSpreadsheetRow = (rowDataStr) => {
   syncBtn.classList = '';
 
   // reload page
-  location.reload(); // could just re-render left-side of page
+  // location.reload(); // could just re-render left-side of page
 };
 
 syncBtn.addEventListener('click', () => {
