@@ -509,7 +509,7 @@ const syncGoogleSpreadsheetRow = (rowDataStr) => {
   syncBtn.classList = '';
 
   // reload page
-  // location.reload(); // could just re-render left-side of page
+  location.reload(); // could just re-render left-side of page
 };
 
 syncBtn.addEventListener('click', () => {
