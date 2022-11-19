@@ -407,7 +407,7 @@ const renderProgress = () => {
           payments[datePaid] = [];
         }
 
-        payments[datePaid].push(parseFloat(debtPaid.balance));
+        payments[datePaid].push(parseFloat(debtPaid.balance * -1));
       });
     });
 
