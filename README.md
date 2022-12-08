@@ -2,7 +2,7 @@
 
 This is a basic debt payoff prioritizer app which is based on the APR/balance.
 
-<img src="./ui-update-08212022.png" width="800"/>
+<img src="./ui-update-12072022.png" width="800"/>
 
 ### Live app
 [View GitHub Pages app](https://jdc-cunningham.github.io/debt-payment-prioritizer/)
