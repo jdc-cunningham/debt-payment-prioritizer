@@ -17,6 +17,9 @@ It's in the `docs` folder, otherwise have to use root and don't want to have API
 This app has no authentication and stores your data in plaintext on your computer (`localStorage`).
 
 ### Features
+- [x] google spreadsheet sync
+- [x] add card limit for usage color indicator
+- [ ] edit mode add due date
 - [ ] add ability to mark as paid (all local state so just add prop to obj)
 - [x] edit entries (amount only)
 
