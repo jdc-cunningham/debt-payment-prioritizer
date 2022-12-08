@@ -259,6 +259,22 @@ body * {
   /* transform: scaleX(-1); flips it horizontally */
 }
 
+.debt-card.usage-green {
+  border-left: 4px solid green;
+}
+
+.debt-card.usage-yellow {
+  border-left: 4px solid yellow;
+}
+
+.debt-card.usage-orange {
+  border-left: 4px solid orange;
+}
+
+.debt-card.usage-red {
+  border-left: 4px solid red;
+}
+
 .green {
   color: green;
   font-weight: bold;

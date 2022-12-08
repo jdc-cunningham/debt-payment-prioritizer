@@ -10,6 +10,7 @@ const appBody = document.getElementById('app-body');
 const totalPayDisp = document.getElementById('total-pay');
 const monthlyDebtGrowthGlobal = [];
 const totalDebtDisp = document.getElementById('total-debt');
+const cardLimits = JSON.parse(localStorage.getItem('card-limits'));
 
 let editCardId = '';
 
@@ -163,6 +164,30 @@ const updateBalance = (balInput, oldBal) => {
   renderCards();
 }
 
+const updateLimit = (limitInput) => {
+  const curData = JSON.parse(dataStore.getItem('finfinite'));
+  const newData = [];
+
+  curData.forEach((debtCard, cardIndex) => {
+
+    // yuck internal loops
+    debtCard.forEach(debtInfo => {
+      if (debtInfo.name === 'id' && debtInfo.val === parseInt(editCardId)) {
+        curData[cardIndex][6] = {
+          name: 'limit',
+          val: limitInput.value.replace(/,/g, '') // lol more than 1?
+        };
+      }
+    });
+
+    newData.push(debtCard);
+  });
+
+  localStorage.setItem('finfinite', JSON.stringify(newData));
+  editCardId = '';
+  renderCards();
+}
+
 // some hoisting in here
 const createCard = ({
   id,
@@ -175,13 +200,15 @@ const createCard = ({
   yearlyDebtGrowth,
   monthlyDebtGrowth,
   dailyDebtGrowth,
-  editMode
+  editMode,
+  usageColorIndicator,
+  limit,
 }) => (
-  `<div class="debt-card" id="${id}">
+  `<div class="debt-card ${usageColorIndicator}" id="${id}">
     <h2>Name: ${name}</h2>
     <h3>Balance: ${
       editMode
-        ? `$<input type="input" value="${truncateFormatCurrency(parseFloat(bal))}" onchange="updateBalance(this, ${parseFloat(bal)})"/>`
+        ? `<input type="input" value="${truncateFormatCurrency(parseFloat(bal))}" onchange="updateBalance(this, ${parseFloat(bal)})"/>`
         : `<span class="red">$${truncateFormatCurrency(parseFloat(bal))}</span></h3>`
     }</h3>
     <h3>APR: ${apr}</h3>
@@ -191,6 +218,11 @@ const createCard = ({
     <h3>Yearly debt growth: $${yearlyDebtGrowth}</h3>
     <h3>Monthly debt growth: $${monthlyDebtGrowth}</h3>
     <h3>Daily debt growth: $${dailyDebtGrowth}</h3>
+    ${
+      editMode
+        ? `<input type="input" value="${truncateFormatCurrency(parseFloat(limit))}" onChange="updateLimit(this, ${parseFloat(bal)})"/>`
+        : ''
+    }
     <button type="button" id="${id}" class="debt-card-del-btn" title="delete">x</button>
     <button type="button" id="${id}" class="debt-card-edit-btn" title="edit"></button>
   </div>`
@@ -229,6 +261,24 @@ const getDebtInfoById = (curData, id) => {
   }
 
   return debtInfo;
+}
+
+const getUsageColorIndicator = (bal, limit) => {
+  const usage = (bal/limit) * 100;
+
+  if (!bal || !limit) {
+    return '';
+  }
+
+  if (usage < 25) {
+    return 'usage-green';
+  } else if (usage < 50) {
+    return 'usage-yellow';
+  } else if (usage < 75) {
+    return 'usage-orange';
+  } else {
+    return 'usage-red';
+  }
 }
 
 // https://stackoverflow.com/a/31581206/2710227
@@ -292,6 +342,7 @@ const renderCards = () => {
     // OMG I don't even want to think what N^5 or something this is, how many nested forEach loops dang
     debtGrowthByYear.forEach(debt => {
       const debtInfo = getDebtInfoById(curData, debt.id);
+      const limit = debtInfo[6]?.val;
       const obj = {};
 
       // bad design array of objects, should be just one object
@@ -307,7 +358,8 @@ const renderCards = () => {
         yearlyDebtGrowth: truncateFormatCurrency(debt.yearlyDebtGrowth),
         monthlyDebtGrowth: truncateFormatCurrency(debt.yearlyDebtGrowth / 12),
         dailyDebtGrowth: truncateFormatCurrency((debt.yearlyDebtGrowth / 12) / 30.44), // looked this 30.4 number up on Google
-        editMode: debt.id === parseInt(editCardId)
+        editMode: debt.id === parseInt(editCardId),
+        usageColorIndicator: getUsageColorIndicator(parseFloat(debt.bal), parseFloat(limit)),
       });
 
       appBody.innerHTML += card;
@@ -407,7 +459,7 @@ const renderProgress = () => {
           payments[datePaid] = [];
         }
 
-        payments[datePaid].push(parseFloat(debtPaid.balance * -1));
+        payments[datePaid].push(parseFloat(debtPaid.balance));
       });
     });
 
